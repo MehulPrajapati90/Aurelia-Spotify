@@ -16,7 +16,7 @@ const Navbar = () => {
                     <Link href={"/"} className="flex items-center justify-center gap-20">
                         <div className="flex items-center justify-center gap-2">
                             <div>
-                                <AudioLines size={25} className="mt-1" />
+                                <AudioLines size={25} />
                             </div>
                             <span className="font-bold text-2xl dark:text-[#f3f3f3] text-[#101114] font-sans tracking-[-1.1px]">
                                 Aurelia

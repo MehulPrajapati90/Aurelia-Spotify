@@ -14,15 +14,80 @@ enum Role {
   USER
 }
 
+enum Category {
+  POP
+  ROCK
+  JAZZ
+  HIPHOP
+  RNB
+  ELECTRONIC
+  BLUES
+  COUNTRY
+  FOLK
+  METAL
+  REGGAE
+  GOSPEL
+  LATIN
+  AFROBEAT
+  BOLLYWOOD
+  hOLLYWOOD
+  INDIAN_CLASSICAL
+  CLASSICAL
+  INDIAN
+  KPOP
+  JPOP
+  CPOP
+  SOUNTRACK
+  LOFI
+  EXPERIMENTAL
+  WORLD
+  INSTRUMENTAL
+  ACOUSTIC
+  LIVE
+  COVER
+  REMIX
+  OTHER
+}
+
 model User {
-  id        String   @id @default(cuid())
-  clerkId   String   @unique
-  email     String   @unique
-  username  String?  @unique
+  id        String     @id @default(cuid())
+  clerkId   String     @unique
+  email     String     @unique
+  username  String?    @unique
   firstName String?
   lastName  String?
   imageUrl  String?
-  role      Role     @default(USER)
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  role      Role       @default(USER)
+  song      Song[]
+  playlists Playlist[]
+  createdAt DateTime   @default(now())
+  updatedAt DateTime   @updatedAt
+}
+
+model Song {
+  id              String     @id @default(cuid())
+  artistId        String
+  title           String
+  lyrics          String?
+  cover_photo     String?
+  song            String
+  video           String?
+  category        Category
+  songDurationSec Int
+  user            User       @relation(fields: [artistId], references: [id])
+  playlists       Playlist[] @relation("PlaylistSongs")
+  createdAt       DateTime   @default(now())
+  updatedAt       DateTime   @updatedAt
+}
+
+model Playlist {
+  id          String   @id @default(cuid())
+  userId      String
+  title       String?
+  description String?
+  cover_photo String?
+  songs       Song[]   @relation("PlaylistSongs")
+  user        User     @relation(fields: [userId], references: [id])
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
 }
